@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+function lxc_bootstrap {
+  local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
+  source "$shome/script/profile"
+
+  export GOPATH="$shome/vendor/go"
+  export PATH="$GOPATH/bin:$PATH"
+  go get -v "github.com/lxc/lxd"
+  cd "$GOPATH/src"
+  go get -v "github.com/lxc/lxd/lxc/..."
+  go install -v "github.com/lxc/lxd/lxc/..."
+
+  mkdir -p "$shome/bin"
+  cp "$GOPATH/bin/lxc" "$shome/bin/"
+}
+
+lxc_bootstrap "$@"
