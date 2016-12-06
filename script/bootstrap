@@ -8,6 +8,7 @@ function lxc_bootstrap {
   export PATH="$GOPATH/bin:$PATH"
   go get -v "github.com/lxc/lxd"
   cd "$GOPATH/src"
+  (cd github.com/lxc/lxd && git fetch --tags && git reset --hard lxd-2.6.2)
   go get -v "github.com/lxc/lxd/lxc/..."
   go install -v "github.com/lxc/lxd/lxc/..."
 
