@@ -4,11 +4,11 @@ function main {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  if type -P lxc >/dev/null; then
-    return 0
+  if [[ "$($shome/script/version | jq -r '.lxd')" != "$LXD_VERSION" ]]; then
+    return 1
   fi
 
-  return 1
+  return 0
 }
 
-main "$@"
+source sub "$BASH_SOURCE" "$@"
