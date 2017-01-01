@@ -13,7 +13,8 @@ function lxc_bootstrap {
   go install -v "github.com/lxc/lxd/lxc/..."
 
   mkdir -p "$shome/bin"
-  cp "$GOPATH/bin/lxc" "$shome/bin/"
+  (set +f; cp $GOPATH/bin/* "$shome/bin/")
+  rm -rf "$GOPATH"
 }
 
 lxc_bootstrap "$@"
