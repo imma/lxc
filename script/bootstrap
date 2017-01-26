@@ -6,6 +6,15 @@ function lxc_bootstrap {
 
   case "$(uname -s)" in
     Darwin)
+      if ! type -P go >/dev/null; then
+        git clone git@github.com:imma/go $BLOCK_PATH/go || true
+        pushd $BLOCK_PATH/go
+        source $BLOCK_PATH/block/script/profile $BLOCK_PATH/block
+        block bootstrap
+        require
+        popd
+      fi
+
       export GOPATH="$shome/vendor/go"
       export PATH="$GOPATH/bin:$PATH"
       go get -v "github.com/lxc/lxd"
