@@ -20,7 +20,7 @@ function lxc_bootstrap {
       ;;
 
     Linux)
-      sudo env - add-apt-repository pa:ubuntu-lxc/lxd-stable
+      sudo env - add-apt-repository ppa:ubuntu-lxc/lxd-stable
       sudo aptitude update -y
       sudo aptitude install -y lxd
       ;;
