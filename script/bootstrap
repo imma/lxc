@@ -20,9 +20,11 @@ function lxc_bootstrap {
       ;;
 
     Linux)
+      sudo apt-mark unhold lxd 2>/dev/null 1>&2 || true
       sudo env - add-apt-repository ppa:ubuntu-lxc/lxd-stable
       sudo aptitude update -y
       sudo aptitude install -y lxd
+      sudo apt-mark hold lxd
       ;;
   esac
 }
