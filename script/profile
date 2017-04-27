@@ -4,7 +4,7 @@ function _lxc_profile {
   local shome="${_lxc_home:-"$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"}"
   PATH="$shome/bin:$PATH"
 
-  LXD_VERSION='2.12'
+  LXD_VERSION='2.13'
 }
 
 _lxc_profile
