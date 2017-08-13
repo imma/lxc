@@ -4,6 +4,10 @@ function lxc_bootstrap {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
+  if type -P lxc >/dev/null; then
+    return 0
+  fi
+
   case "$(uname -s)" in
     Darwin)
       export GOPATH="$shome/vendor/go"
