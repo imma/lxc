@@ -5,6 +5,7 @@ function _lxc_profile {
   PATH="$shome/bin:$PATH"
 
   LXD_VERSION='2.16'
+  LXD_UBUNTU_VERSION='2.16-0ubuntu2~ubuntu16.04.1~ppa1'
 }
 
 _lxc_profile
