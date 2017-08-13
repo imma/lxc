@@ -6,11 +6,11 @@ function lxc_bootstrap {
 
   case "$(uname -s)" in
     Linux)
-      ${NOSUDO} apt-mark unhold lxd 2>/dev/null 1>&2 || true
-      ${NOSUDO} env - add-apt-repository ppa:ubuntu-lxc/lxd-stable
-      ${NOSUDO} apt-get update -y
-      ${NOSUDO} apt-get install -y lxd="${LXD_VERSION}-*"
-      ${NOSUDO} apt-mark hold lxd
+      ${NOSUDO} sudo apt-mark unhold lxd 2>/dev/null 1>&2 || true
+      ${NOSUDO} sudo env - add-apt-repository ppa:ubuntu-lxc/lxd-stable
+      ${NOSUDO} sudo apt-get update -y
+      ${NOSUDO} sudo apt-get install -y lxd="${LXD_VERSION}-*"
+      ${NOSUDO} sudo apt-mark hold lxd
       ;;
   esac
 
