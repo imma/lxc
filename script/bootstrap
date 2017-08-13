@@ -4,33 +4,29 @@ function lxc_bootstrap {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
-  if type -P lxc >/dev/null; then
-    return 0
-  fi
-
   case "$(uname -s)" in
     Darwin)
-      export GOPATH="$shome/vendor/go"
-      export PATH="$GOPATH/bin:$PATH"
-      go get -v "github.com/lxc/lxd"
-      cd "$GOPATH/src"
-      (cd github.com/lxc/lxd && git fetch --tags && git reset --hard lxd-${LXD_VERSION})
-      go get -v "github.com/lxc/lxd/lxc/..."
-      go install -v "github.com/lxc/lxd/lxc/..."
-
-      mkdir -p "$shome/bin"
-      (set +f; cp $GOPATH/bin/* "$shome/bin/")
-      rm -rf "$GOPATH"
-      ;;
 
     Linux)
-      sudo apt-mark unhold lxd 2>/dev/null 1>&2 || true
-      sudo env - add-apt-repository ppa:ubuntu-lxc/lxd-stable
-      sudo apt-get update -y
-      sudo apt-get install -y lxd="${LXD_VERSION}-*"
-      sudo apt-mark hold lxd
+      ${NOSUDO} apt-mark unhold lxd 2>/dev/null 1>&2 || true
+      ${NOSUDO} env - add-apt-repository ppa:ubuntu-lxc/lxd-stable
+      ${NOSUDO} apt-get update -y
+      ${NOSUDO} apt-get install -y lxd="${LXD_VERSION}-*"
+      ${NOSUDO} apt-mark hold lxd
       ;;
   esac
+
+  export GOPATH="$shome/vendor/go"
+  export PATH="$GOPATH/bin:$PATH"
+  go get -v "github.com/lxc/lxd"
+  cd "$GOPATH/src"
+  (cd github.com/lxc/lxd && git fetch --tags && git reset --hard lxd-${LXD_VERSION})
+  go get -v "github.com/lxc/lxd/lxc/..."
+  go install -v "github.com/lxc/lxd/lxc/..."
+
+  mkdir -p "$shome/bin"
+  (set +f; cp $GOPATH/bin/* "$shome/bin/")
+  rm -rf "$GOPATH"
 }
 
 lxc_bootstrap "$@"
