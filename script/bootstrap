@@ -5,8 +5,6 @@ function lxc_bootstrap {
   source "$shome/script/profile"
 
   case "$(uname -s)" in
-    Darwin)
-
     Linux)
       ${NOSUDO} apt-mark unhold lxd 2>/dev/null 1>&2 || true
       ${NOSUDO} env - add-apt-repository ppa:ubuntu-lxc/lxd-stable
