@@ -12,19 +12,20 @@ function lxc_bootstrap {
       ${NOSUDO} sudo apt-get install -y lxd="${LXD_VERSION}-*"
       ${NOSUDO} sudo apt-mark hold lxd
       ;;
+    *)
+      export GOPATH="$shome/vendor/go"
+      export PATH="$GOPATH/bin:$PATH"
+      go get -v "github.com/lxc/lxd"
+      cd "$GOPATH/src"
+      (cd github.com/lxc/lxd && git fetch --tags && git reset --hard lxd-${LXD_VERSION})
+      go get -v "github.com/lxc/lxd/lxc/..."
+      go install -v "github.com/lxc/lxd/lxc/..."
+
+      mkdir -p "$shome/bin"
+      (set +f; cp $GOPATH/bin/* "$shome/bin/")
+      rm -rf "$GOPATH"
+      ;;
   esac
-
-  export GOPATH="$shome/vendor/go"
-  export PATH="$GOPATH/bin:$PATH"
-  go get -v "github.com/lxc/lxd"
-  cd "$GOPATH/src"
-  (cd github.com/lxc/lxd && git fetch --tags && git reset --hard lxd-${LXD_VERSION})
-  go get -v "github.com/lxc/lxd/lxc/..."
-  go install -v "github.com/lxc/lxd/lxc/..."
-
-  mkdir -p "$shome/bin"
-  (set +f; cp $GOPATH/bin/* "$shome/bin/")
-  rm -rf "$GOPATH"
 }
 
 lxc_bootstrap "$@"
