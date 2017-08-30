@@ -4,6 +4,7 @@ function lxc_bootstrap {
   local shome="$(cd -P -- "${BASH_SOURCE%/*}/.." && pwd -P)"
   source "$shome/script/profile"
 
+  set -x
   case "$(uname -s)" in
     Linux)
       ${NOSUDO} sudo apt-mark unhold lxd 2>/dev/null 1>&2 || true
