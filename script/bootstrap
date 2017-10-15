@@ -5,8 +5,8 @@ function lxc_bootstrap {
   source "$shome/script/profile"
 
   set -x
-  case "$(uname -s)" in
-    Linux)
+  case "${DISTRIB_ID}" in
+    Ubuntu)
       ${NOSUDO} sudo apt-mark unhold lxd 2>/dev/null 1>&2 || true
       ${NOSUDO} sudo env - add-apt-repository ppa:ubuntu-lxc/lxd-stable
       ${NOSUDO} sudo apt-get update -y
